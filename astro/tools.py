@@ -1,3 +1,5 @@
+import numpy as np
+
 def angsep(ra1, dec1, ra2, dec2, sepunits='arcsec'):
     """
     Return angular separation btwn points
@@ -17,7 +19,6 @@ def angsep(ra1, dec1, ra2, dec2, sepunits='arcsec'):
     Returns:
     sep: same type as input angles, angular separation between points
     """
-    import numpy as np
     deg2rad = np.pi/180.0
 
     ra1 = ra1*deg2rad
@@ -41,38 +42,3 @@ def angsep(ra1, dec1, ra2, dec2, sepunits='arcsec'):
     sep *= conversion[sepunits]
 
     return sep
-
-def pickle_data(data, filename):
-    """
-    Pickle data
-
-    input
-    -----
-    data : any data construct. the data
-        to be pickled.
-    filename : string. name of file to 
-        output with full path name.
-    """
-    import cPickle as pickle
-    pkl_file = open(filename, 'wb')
-    pickle.dump(data, pkl_file)
-    pkl_file.close()
-
-def read_pickled_data(filename):
-    """
-    Read the pickled data
-
-    input
-    -----
-    filename : string. name of file that 
-        contains pickled data
-
-    output
-    ------
-    the unpickled data
-    """
-    import cPickle as pickle
-    pkl_file = open(filename, 'rb')
-    data = pickle.load(pkl_file)
-    pkl_file.close()
-    return data

@@ -1,6 +1,6 @@
 import numpy as np
 
-def match(matchcoord, catcoord, maxsep, sep_units='arcsec', return_seps=False):
+def match_coordinates(matchcoord, catcoord, maxsep, sep_units='arcsec', return_seps=False):
     """
     Match catalogs given ra and dec in degrees. This function 
     is essetially a wrapper for astropy's match_coordinates_sky, 
@@ -39,7 +39,7 @@ def match(matchcoord, catcoord, maxsep, sep_units='arcsec', return_seps=False):
     sep2d = sep2d.value[mask]/convert[sep_units]
     return (mask, idx) if not return_seps else (mask, idx, sep2d)
 
-def matchcats(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
+def crossmatch(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
     """
     Build astropy SkyCoord objects given two tables with ra and dec columns 
     and match them using astropy's match_coordinates_sky function.
@@ -74,5 +74,5 @@ def matchcats(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
     cats = []
     for tab in [table_1, table_2]:
         cats.append(SkyCoord(tab['ra'], tab['dec'], frame='icrs', unit='deg'))
-    mask, idx, sep2d = match(cats[0], cats[1], maxsep, sep_units, True)
+    mask, idx, sep2d = match_coordinates(cats[0], cats[1], maxsep, sep_units, True)
     return (table_1[mask], table_2[idx], sep2d) if return_seps else (table_1[mask], table_2[idx])

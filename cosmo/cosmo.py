@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 
 import numpy as np
+from ..tools import angsep
 from scipy.integrate import quad
 from scipy.optimize import brentq
 
@@ -66,7 +67,6 @@ class Cosmology:
         """
         comoving separation between two galaxies 
         """
-        from tools import angsep
         Dc1 = self.com_dist(z1)
         Dc2 = self.com_dist(z2)
         theta = angsep(ra1, dec1, ra2, dec2)
