@@ -1,7 +1,7 @@
 #!/usr/bin/env python 
 
 import numpy as np
-from ..tools import angsep
+from ..astro import angsep
 from scipy.integrate import quad
 from scipy.optimize import brentq
 
