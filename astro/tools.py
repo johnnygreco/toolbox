@@ -18,6 +18,9 @@ def angsep(ra1, dec1, ra2, dec2, sepunits='arcsec'):
 
     Returns:
     sep: same type as input angles, angular separation between points
+
+    Note: This is function uses the Vincenty formula:
+    https://en.wikipedia.org/wiki/Great-circle_distance.
     """
     deg2rad = np.pi/180.0
 
