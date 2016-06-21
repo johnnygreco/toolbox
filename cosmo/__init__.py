@@ -1,1 +1,1 @@
-from cosmo import Cosmology
+from .cosmo import Cosmology
