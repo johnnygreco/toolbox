@@ -4,9 +4,11 @@
 #
 # You can freely use the code.
 # 
-# updates
-# __all__ added by Johnny Greco
-#
+# updates by Johnny Greco
+# - __all__ added (6-23-2016)
+# - python 3 compatibility (6-23-2016)
+
+from __future__ import print_function
 
 import numpy
 import math
@@ -99,7 +101,7 @@ def linear(inputArray, scale_min=None, scale_max=None):
 	@return: image data array
 	
 	"""		
-	print "img_scale : linear"
+	print("img_scale : linear")
 	imageData=numpy.array(inputArray, copy=True)
 	
 	if scale_min == None:
@@ -131,7 +133,7 @@ def sqrt(inputArray, scale_min=None, scale_max=None):
 	
 	"""		
     
-	print "img_scale : sqrt"
+	print("img_scale : sqrt")
 	imageData=numpy.array(inputArray, copy=True)
 	
 	if scale_min == None:
@@ -163,7 +165,7 @@ def log(inputArray, scale_min=None, scale_max=None):
 	
 	"""		
     
-	print "img_scale : log"
+	print("img_scale : log")
 	imageData=numpy.array(inputArray, copy=True)
 	
 	if scale_min == None:
@@ -179,7 +181,7 @@ def log(inputArray, scale_min=None, scale_max=None):
 	try :
 		imageData[indices1] = numpy.log10(imageData[indices1])/factor
 	except :
-		print "Error on math.log10 for ", (imageData[i][j] - scale_min)
+		print("Error on math.log10 for ", (imageData[i][j] - scale_min))
 
 	return imageData
 
@@ -200,7 +202,7 @@ def asinh(inputArray, scale_min=None, scale_max=None, non_linear=2.0):
 	
 	"""		
     
-	print "img_scale : asinh"
+	print("img_scale : asinh")
 	imageData=numpy.array(inputArray, copy=True)
 	
 	if scale_min == None:
