@@ -1,3 +1,4 @@
+########################################################################
 #
 # Written by Min-Su Shin
 # Department of Astronomy, University of Michigan (2009 - )
@@ -6,8 +7,14 @@
 # You can freely use the code.
 #
 # updates by Johnny Greco
+# -----------------------
 # - __all__ added (6-23-2016)
 # - python 3 compatibility (6-23-2016)
+#
+# Reference: Lupton et al. 2004
+# (http://adsabs.harvard.edu/abs/2004PASP..116..133L)
+#
+########################################################################
 
 from __future__ import print_function
 
