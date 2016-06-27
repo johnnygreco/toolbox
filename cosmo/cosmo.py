@@ -4,17 +4,15 @@ import numpy as np
 from ..astro import angsep
 from scipy.integrate import quad
 from scipy.optimize import brentq
+WMAP9 = [0.693, 0.287, 1.0-0.287]
 
 class Cosmology:
     """
     Class for calculating common cosmological quantities
     """
-
-    def __init__(self, h, omegaM0, omegaL0):
-        self.h = h
-        self.H0 = 100.0*h # km/s/Mpc
-        self.omegaM0 = omegaM0
-        self.omegaL0 = omegaL0
+    def __init__(self, params=WMAP9):
+        self.h, self.omegaM0, self.omegaL0 = params
+        self.H0 = 100.0*self.h # km/s/Mpc
         self.c = 2.99792458e5 # km/s
         self.G = 4.302113488372941e-09 # km2 Mpc / (M_sun s2)
         self.DH = self.c/self.H0
