@@ -3,7 +3,6 @@
 import numpy as np
 from ..astro import angsep
 from scipy.integrate import quad
-from scipy.optimize import brentq
 WMAP9 = [0.693, 0.287, 1.0-0.287]
 
 class Cosmology:
@@ -23,12 +22,6 @@ class Cosmology:
         its present value
         """
         return np.sqrt(self.omegaM0*(1.0+z)**3 + self.omegaL0)
-
-    def invE(self, z):
-        """
-        inverse of above ratio
-        """
-        return 1.0/np.sqrt(self.omegaM0*(1.0+z)**3 + self.omegaL0)
 
     def rhocrit(self, z):
         """
@@ -57,9 +50,9 @@ class Cosmology:
     def ang_size(self, z, size):
         """
         angular size on the sky as a function of redshift
+        note: input size must be in Mpc
         """
-        DA = self.AngDiamDist(z)
-        return np.arctan(size / DA)
+        return np.arctan(size / self.D_A(z))
 
     def com_sep(self, ra1, dec1, z1, ra2, dec2, z2):
         """
