@@ -2,6 +2,8 @@
 SExtractor utilities
 """
 
+from __future__ import print_function
+
 __all__ = ['read_sexout', 'sexout_to_ds9reg']
 
 def read_sexout(sexfile):
@@ -23,7 +25,7 @@ def read_sexout(sexfile):
     return sexout
 
 def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
-        outfile='same', outdir='.', drawmode='ellipse'):
+        outfile='same', drawmode='ellipse'):
     """
     Write a ds9 region file from SExtractor output.
 
@@ -42,7 +44,6 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
     outfile : string, optional
         Output reg file name. If 'same', use sexfile names 
         with a .reg extension. 
-    outdir : string, optional
     drawmode : string, optional
         Draw an 'ellipse' or 'point' for every object
 
@@ -74,8 +75,9 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
         regions.append(fmt % tuple(vals))
 
     if outfile=='same':
-        outfile = sexfile.split('.')[0]+'.reg'
+        outfile = sexfile[:-4]+'.reg'
 
+    print('writing to region file to', outfile)
     fh = open(outfile,'w')
     fh.write('\n'.join(regions))
     fh.close()
