@@ -1,12 +1,15 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.patches import Ellipse
+
+__all__ = ['draw_ellipse']
 
 def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
     """
     Taken from astroML.plotting.tools: 
     https://github.com/astroML/astroML
     """
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Ellipse
+
     if ax is None:
         ax = plt.gca()
 
