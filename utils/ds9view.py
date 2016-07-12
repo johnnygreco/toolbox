@@ -10,12 +10,13 @@ def ds9view(fitsfile, regfile=None, width=750, height=750, mecube=False):
     fitsfile : string
         Fits file of image
     regfile : string, optional
-        ds9 regions file. If None, 
-        no regions will be drawn.
+        ds9 regions file. If None, no regions will be drawn.
     width : float, optional
         Width of window
     height : float, optional
         height of window
+    mecube : bool, optional
+        If True, open file as multiple extension cube. 
     """
     import pyds9
 
@@ -26,10 +27,8 @@ def ds9view(fitsfile, regfile=None, width=750, height=750, mecube=False):
                           '-wcs skyformat degrees '+\
                           '-cmap invert yes ')
 
-    if mecube:
-        ds9.set('file mecube '+fitsfile)
-    else:
-        ds9.set('file '+fitsfile)
+    cmd = 'file mecube '+fitsfile if mecube else 'file '+fitsfile
+    ds9.set(cmd)
 
     if regfile is not None:
         ds9.set('regions load '+regfile)
