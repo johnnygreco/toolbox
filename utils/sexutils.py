@@ -25,7 +25,7 @@ def read_sexout(sexfile):
     return sexout
 
 def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
-        outfile='same', drawmode='ellipse'):
+                     outfile='same', drawmode='ellipse', textparam=None):
     """
     Write a ds9 region file from SExtractor output.
 
@@ -46,6 +46,9 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
         with a .reg extension. 
     drawmode : string, optional
         Draw an 'ellipse' or 'point' for every object
+    textparam : string, optional
+        If not None, write this sextractor output parameter 
+        next to each object in the catalog. 
 
     Notes
     -----
@@ -65,9 +68,14 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
         fields = fields[:2]
     if winparams:
         fields = [f.split('_')[0]+'WIN'+'_'+f.split('_')[1] for f in fields]
+    if textparam is not None:
+        textfmt = 'text={%s}'
+        fields.append(textparam)
+    else:
+        textfmt = ''
 
-    fmt = {'ellipse':'ellipse(%s %s %s %s %s) # color=%s tag={%s}',
-           'point':'point(%s %s) # point=circle color=%s tag={%s}'}[drawmode]
+    fmt = {'ellipse':'ellipse(%s %s %s %s %s) # '+textfmt+' color=%s tag={%s}',
+           'point':'point(%s %s) # point=circle '+textfmt+' color=%s tag={%s}'}[drawmode]
 
     for row  in sexout[fields]:
         vals = list(row)
