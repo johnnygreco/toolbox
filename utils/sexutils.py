@@ -52,7 +52,12 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
 
     Notes
     -----
-    Adapted from https://github.com/nhmc/Barak.git. 
+     i) Adapted from https://github.com/nhmc/Barak.git. 
+    ii) The sextractor output file must contain X_IMAGE and 
+        Y_IMAGE for drawmode=point, and for drawmode=ellipse, 
+        it must also contain A_IMAGE, B_IMAGE, and THETA_IMAGE.
+        The corresponding 'WIN' parameters are acceptable with 
+        winparams set to True. 
     """
     assert (drawmode=='ellipse') or (drawmode=='point')
 
@@ -60,8 +65,6 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
     regions = ['global font="helvetica 10 normal" select=1 highlite=1 '
                'edit=0 move=1 delete=1 include=1 fixed=0 source']
     regions.append('image')
-
-    colnames = sexout.dtype.names
 
     fields = ['X_IMAGE', 'Y_IMAGE', 'A_IMAGE','B_IMAGE','THETA_IMAGE']
     if drawmode=='point':
