@@ -21,7 +21,9 @@ def read_sexout(sexfile):
       Output of sextractor in a numpy structured array.
     """
     from astropy.table import Table
+    from collections import OrderedDict
     sexout = Table.read(sexfile, format='ascii.sextractor')
+    sexout.meta = OrderedDict() # bug in astropy sextractor table
     return sexout
 
 def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
