@@ -26,16 +26,15 @@ def read_sexout(sexfile):
     sexout.meta = OrderedDict() # bug in astropy sextractor table
     return sexout
 
-def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
-                     outfile='same', drawmode='ellipse', textparam=None):
+def sexout_to_ds9reg(sexout, color='green', tag='all', winparams=False,
+                     outfile='sex.reg', drawmode='ellipse', textparam=None):
     """
-    Write a ds9 region file from SExtractor output.
+    Write a ds9 region file from SExtractor output. 
 
     Parameters
     ----------
-    sexfile : string
-      SExtractor output file. If None, must pass the output
-      in the sexout parameter.
+    sexout : structured ndarray
+        Output cat from a sextractor run (output of read_sexout).
     color : string, optional 
       Region color (cyan, blue, magenta, red, green, 
       yellow, white, or black)
@@ -44,8 +43,7 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
     winparams : bool, optional
         If True, use sextractor's windowed parameters.
     outfile : string, optional
-        Output reg file name. If 'same', use sexfile names 
-        with a .reg extension. 
+        Output reg file name. 
     drawmode : string, optional
         Draw an 'ellipse' or 'point' for every object
     textparam : string, optional
@@ -63,7 +61,6 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
     """
     assert (drawmode=='ellipse') or (drawmode=='point')
 
-    sexout = read_sexout(sexfile)
     regions = ['global font="helvetica 10 normal" select=1 highlite=1 '
                'edit=0 move=1 delete=1 include=1 fixed=0 source']
     regions.append('image')
@@ -86,9 +83,6 @@ def sexout_to_ds9reg(sexfile, color='green', tag='all', winparams=False,
         vals = list(row)
         vals.extend([color, tag])
         regions.append(fmt % tuple(vals))
-
-    if outfile=='same':
-        outfile = sexfile[:-4]+'.reg'
 
     print('writing to region file to', outfile)
     fh = open(outfile,'w')
