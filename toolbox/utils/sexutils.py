@@ -4,27 +4,27 @@ SExtractor utilities
 
 from __future__ import print_function
 
-__all__ = ['read_sexout', 'sexout_to_ds9reg']
+__all__ = ['read_sex_cat', 'sexout_to_ds9reg']
 
-def read_sexout(sexfile):
+def read_sex_cat(catfile):
     """
-    Read a sextractor output file using astropy.
+    Read a sextractor output catalog using astropy.
 
     Parameters
     ----------
-    sexfile : string
-      SExtractor output file. If None, must pass the output
+    catfile : string
+      SExtractor output catalog.
 
     Returns
     -------
-    sexout : structured array
-      Output of sextractor in a numpy structured array.
+    cat : astropy table
+      Output sextractor catalog.
     """
     from astropy.table import Table
     from collections import OrderedDict
-    sexout = Table.read(sexfile, format='ascii.sextractor')
-    sexout.meta = OrderedDict() # bug in astropy sextractor table
-    return sexout
+    cat = Table.read(catfile, format='ascii.sextractor')
+    cat.meta = OrderedDict() # bug in astropy sextractor table
+    return cat
 
 def sexout_to_ds9reg(sexout, color='green', tag='all', winparams=False,
                      outfile='sex.reg', drawmode='ellipse', textparam=None):

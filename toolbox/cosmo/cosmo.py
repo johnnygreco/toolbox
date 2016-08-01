@@ -70,6 +70,6 @@ class Cosmology:
         ra2, dec2, z2 = coord3d_2
         Dc1 = self.com_dist(z1)
         Dc2 = self.com_dist(z2)
-        theta = angsep(ra1, dec1, ra2, dec2)
+        theta = angsep(ra1, dec1, ra2, dec2, sepunits='radian')
         sep = np.sqrt(Dc1**2 + Dc2**2 - 2.0*Dc1*Dc2*np.cos(theta))
         return sep 
