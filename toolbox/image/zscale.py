@@ -34,7 +34,7 @@ def zscale(img, contrast=0.25, samples=1000):
     n = len(imsort)
     idx = np.arange(n)
 
-    med = imsort[n/2]
+    med = imsort[int(n/2)]
     w = 0.25
     i_lo, i_hi = int((0.5-w)*n), int((0.5+w)*n)
     p = np.polyfit(idx[i_lo:i_hi], imsort[i_lo:i_hi], 1)
