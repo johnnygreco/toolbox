@@ -1,5 +1,5 @@
 
-__all__ = ['draw_ellipse']
+__all__ = ['draw_ellipse', 'line_widths']
 
 def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
     """
@@ -31,3 +31,12 @@ def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
                              2 * scale * sigma1, 2 * scale * sigma2,
                              alpha * 180. / np.pi,
                              **kwargs))
+def line_widths(lw):
+    """
+    Set major/minor ticks and axies line widths.
+    """
+    import matplotlib.pyplot as plt
+    plt.rc('axes', linewidth=lw)
+    plt.rc('ytick.major', width=lw)
+    plt.rc('ytick.major', width=lw)
+    plt.rc('xtick.major', width=lw)
