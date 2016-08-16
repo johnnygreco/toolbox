@@ -1,9 +1,12 @@
 import numpy as np
 
-def match_coordinates(matchcoord, catcoord, maxsep, sep_units='arcsec', return_seps=False):
+__all__ = ['match_coordinates', 'crossmatch']
+
+def match_coordinates(matchcoord, catcoord, maxsep, sep_units='arcsec', 
+                      return_seps=False):
     """
     Match catalogs given ra and dec in degrees. This function 
-    is essetially a wrapper for astropy's match_coordinates_sky, 
+    is essentially a wrapper for astropy's match_coordinates_sky, 
     but I've modified the return values.
     
     Parameters
@@ -20,6 +23,7 @@ def match_coordinates(matchcoord, catcoord, maxsep, sep_units='arcsec', return_s
     return_seps : bool, optional, default = False
         If True, return the angular separations between the
         matched objects in the catalogs.
+        
 
     Returns
     -------
@@ -39,16 +43,18 @@ def match_coordinates(matchcoord, catcoord, maxsep, sep_units='arcsec', return_s
     sep2d = sep2d.value[mask]/convert[sep_units]
     return (mask, idx) if not return_seps else (mask, idx, sep2d)
 
-def crossmatch(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
+
+def crossmatch(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False, 
+               ra_colname='ra', dec_colname='dec'):
     """
     Build astropy SkyCoord objects given two tables with ra and dec columns 
     and match them using astropy's match_coordinates_sky function.
 
     Parameters
     ----------
-    table_1 : numpy array with named columns (astropy Table)
+    table_1 : astropy.table.Table
         A Table with the first catalogs ra and dec.
-    table_2 : numpy array with named columns (astropy Table)
+    table_2 : astropy.table.Table
         A Table with the second catalogs ra and dec.
     maxsep : float
         The maximum angular separation for which objects are 
@@ -58,6 +64,10 @@ def crossmatch(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
     return_seps : bool, optional, default = False
         If True, return the angular separations between the
         matched objects in the catalogs.
+    ra_colname : string, optional
+        The ra column name.
+    dec_colname : string, optional
+        The ra column name.
         
     Returns
     -------
@@ -73,6 +83,6 @@ def crossmatch(table_1, table_2, maxsep, sep_units='arcsec', return_seps=False):
 
     cats = []
     for tab in [table_1, table_2]:
-        cats.append(SkyCoord(tab['ra'], tab['dec'], frame='icrs', unit='deg'))
+        cats.append(SkyCoord(tab[ra_colname], tab[dec_colname], frame='icrs', unit='deg'))
     mask, idx, sep2d = match_coordinates(cats[0], cats[1], maxsep, sep_units, True)
     return (table_1[mask], table_2[idx], sep2d) if return_seps else (table_1[mask], table_2[idx])

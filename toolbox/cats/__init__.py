@@ -1,1 +1,1 @@
-from .match import crossmatch
+from .match import *
