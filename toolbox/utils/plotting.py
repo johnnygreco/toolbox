@@ -1,5 +1,7 @@
 
-__all__ = ['draw_ellipse', 'line_widths']
+import matplotlib.pyplot as plt
+
+__all__ = ['draw_ellipse', 'line_widths', 'ticks_off']
 
 def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
     """
@@ -7,7 +9,6 @@ def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
     https://github.com/astroML/astroML
     """
     import numpy as np
-    import matplotlib.pyplot as plt
     from matplotlib.patches import Ellipse
 
     if ax is None:
@@ -31,12 +32,22 @@ def draw_ellipse(mu, C, scales=[1, 2, 3], ax=None, **kwargs):
                              2 * scale * sigma1, 2 * scale * sigma2,
                              alpha * 180. / np.pi,
                              **kwargs))
+
 def line_widths(lw):
     """
     Set major/minor ticks and axies line widths.
     """
-    import matplotlib.pyplot as plt
     plt.rc('axes', linewidth=lw)
     plt.rc('ytick.major', width=lw)
     plt.rc('ytick.major', width=lw)
     plt.rc('xtick.major', width=lw)
+
+
+def ticks_off(ax):
+    """
+    Turn off ticks and tick labels.
+    """
+    plt.setp(ax.get_xticklabels(), visible=False)
+    plt.setp(ax.get_yticklabels(), visible=False)
+    ax.xaxis.set_ticks_position('none') 
+    ax.yaxis.set_ticks_position('none')  
