@@ -25,7 +25,7 @@ def zscale(img, contrast=0.25, samples=1000):
     ------ 
     http://hsca.ipmu.jp/hscsphinx/scripts/psfMosaic.html
     """
-    ravel = img.ravel()
+    ravel = img.ravel()[~np.isnan(img.ravel())]
     if len(ravel) > samples:
         imsort = np.sort(np.random.choice(ravel, size=samples))
     else:
