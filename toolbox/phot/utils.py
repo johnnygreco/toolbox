@@ -46,7 +46,7 @@ def lum_solar_units(abs_mag, band):
     """
     assert band in BANDS, 'band not in '+', '.join(BANDS)
     abs_mag = _make_array_if_needed(abs_mag)
-    return 10**0.4*(M_sun[band] - abs_mag)*u.L_sun
+    return 10**(0.4*(M_sun[band] - abs_mag))*u.L_sun
 
 
 def fnu_from_AB_mag(mag):
