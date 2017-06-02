@@ -37,7 +37,7 @@ def absolute_magnitude(mag, z=None, D_L=None, cosmo=None):
     else:
         D_L = _make_array_if_needed(D_L)
     mag = _make_array_if_needed(mag)
-    return mag - 5*np.log10(D_L.to('pc')/u.pc) + 5
+    return mag - 5*np.log10(D_L.to('pc').value) + 5
 
 
 def lum_solar_units(abs_mag, band):
