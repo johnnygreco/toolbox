@@ -1,6 +1,7 @@
+import os
 import numpy as np
 from astropy import units as u
-from ..utils.misc import isiterable
+from ..utils.misc import project_dir, isiterable
 
 #B&M and http://www.ucolick.org/~cnaw/sun.html
 M_sun = dict(
@@ -60,6 +61,27 @@ def Lnu_from_AB_mag(abs_mag):
     d = 10*u.pc
     return 4*np.pi*(d.to('cm'))**2*fnu_from_AB_mag(abs_mag)
 
-
 def _make_array_if_needed(p):
     return np.asarray(p) if isiterable(p) else p
+
+
+class Bell2003(object):
+    """
+    Estimate stellar masses using the using the mass-to-light ratio/color 
+    relation derived from Bell et al. (2003).
+    """
+
+    def __init__(self):
+        from astropy.io import ascii
+        fn = os.path.join(project_dir, 'data/bell-table.txt')
+        self.table = ascii.read(fn).to_pandas()
+        self.table.set_index('Color', inplace=True)
+
+    def mass_to_light(self, band, color_name, color):
+        log_ml = self.table.loc[color_name, 'a'+band] +\
+                 self.table.loc[color_name, 'b'+band]*color
+        return (10.0**log_ml)*u.M_sun/u.L_sun
+
+    def stellar_mass(self, band, color_name, color, abs_mag):
+        lum = lum_solar_units(abs_mag, band)
+        return lum*self.mass_to_light(band, color_name, color)
