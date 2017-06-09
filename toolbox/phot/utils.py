@@ -83,5 +83,7 @@ class Bell2003(object):
         return (10.0**log_ml)*u.M_sun/u.L_sun
 
     def stellar_mass(self, band, color_name, color, abs_mag):
+        color = _make_array_if_needed(color)
+        abs_mag = _make_array_if_needed(abs_mag)
         lum = lum_solar_units(abs_mag, band)
         return lum*self.mass_to_light(band, color_name, color)
