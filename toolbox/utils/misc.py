@@ -1,6 +1,10 @@
+import os
 import numpy as np
 
-__all__ = ['isiterable', 'vectorize_if_needed']
+__all__ = ['project_dir', 'isiterable', 'vectorize_if_needed']
+
+project_dir = os.path.dirname(os.path.dirname(__file__))
+
 
 def isiterable(obj):
     """
