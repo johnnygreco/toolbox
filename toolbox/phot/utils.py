@@ -29,7 +29,7 @@ galex_FUV_mAB_0 = 18.82
 
 def absolute_magnitude(mag, z=None, D_L=None, cosmo=None):
     if D_L is None:
-        assert z, 'must give z or D_L'
+        assert z is not None, 'must give z or D_L'
         z = _make_array_if_needed(z)
         if cosmo is None:
             from astropy.cosmology import FlatLambdaCDM
@@ -56,13 +56,18 @@ def fnu_from_AB_mag(mag):
     return fnu*u.erg/u.s/u.Hz/u.cm**2
 
 
-def Lnu_from_AB_mag(abs_mag):
+def lnu_from_AB_mag(abs_mag):
     abs_mag = _make_array_if_needed(abs_mag)
     d = 10*u.pc
     return 4*np.pi*(d.to('cm'))**2*fnu_from_AB_mag(abs_mag)
 
-def _make_array_if_needed(p):
-    return np.asarray(p) if isiterable(p) else p
+
+def sfr_uv(Lnu):
+    """
+    Star formation rate in M_sun/yr from L_nu in UV. 
+    Kennicutt, Jr., R. C. 1998, ARA&A, 36, 189
+    """
+    return 1.4e-28*(Lnu/(u.erg/u.s/u.Hz)).decompose()*u.Msun/u.yr
 
 
 class Bell2003(object):
@@ -87,3 +92,7 @@ class Bell2003(object):
         abs_mag = _make_array_if_needed(abs_mag)
         lum = lum_solar_units(abs_mag, band)
         return lum*self.mass_to_light(band, color_name, color)
+
+
+def _make_array_if_needed(p):
+    return np.asarray(p) if isiterable(p) else p
