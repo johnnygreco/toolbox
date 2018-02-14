@@ -35,8 +35,6 @@ def absolute_magnitude(mag, z=None, D_L=None, cosmo=None):
             from astropy.cosmology import FlatLambdaCDM
             cosmo = FlatLambdaCDM(70.0, 0.3)
         D_L = cosmo.luminosity_distance(z)
-    else:
-        D_L = _make_array_if_needed(D_L)
     mag = _make_array_if_needed(mag)
     return mag - 5*np.log10(D_L.to('pc').value) + 5
 
