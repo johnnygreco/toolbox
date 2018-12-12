@@ -4,3 +4,4 @@ from . import cosmo
 from . import image
 from . import phot
 from . import utils
+from . import hsc
