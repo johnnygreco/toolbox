@@ -27,6 +27,10 @@ galex_NUV_mAB_0 = 20.08
 galex_FUV_mAB_0 = 18.82    
 
 
+def sdss_to_V_jester_2005(g, g_r): 
+    return g - 0.59*(g_r) - 0.01
+
+
 def absolute_magnitude(mag, z=None, D_L=None, cosmo=None):
     if D_L is None:
         assert z is not None, 'must give z or D_L'
